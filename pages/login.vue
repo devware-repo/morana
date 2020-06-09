@@ -1,0 +1,54 @@
+<template>
+  <div class="container pt-4">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="row">
+          <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4">
+            <img class="w-100" src="/images/user-img.svg" alt="User img" />
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4">
+            <form action="#" class="needs-validation">
+              <div class="login-input-wrapper text-left">
+                <img
+                  class="login-icon"
+                  src="/images/login-user-icon.svg"
+                  alt="Usuário"
+                />
+                <input
+                  type="text"
+                  class="login-input"
+                  placeholder="Usuário"
+                  name="username"
+                  required
+                />
+              </div>
+              <div class="login-input-wrapper text-left mt-2">
+                <img
+                  class="login-icon"
+                  src="/images/login-lock-icon.svg"
+                  alt="Senha"
+                />
+                <input
+                  type="password"
+                  class="login-input"
+                  placeholder="Senha"
+                  name="senha"
+                  required
+                />
+              </div>
+              <button type="submit" class="login-button mt-2">Login</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  layout: 'login'
+}
+</script>
