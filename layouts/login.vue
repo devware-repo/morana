@@ -28,3 +28,14 @@
   </div>
   <!-- .site-wrap -->
 </template>
+
+<script>
+export default {
+  middleware: 'notAuthenticated',
+  head() {
+    return {
+      title: 'Morana Taguatinga Shopping | Login'
+    }
+  }
+}
+</script>

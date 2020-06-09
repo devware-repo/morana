@@ -24,7 +24,7 @@
               <div class="col-md-4 col-lg-3">
                 <img
                   class="cart-description-img"
-                  src="/images/colar-coracao.jpg"
+                  :src="produto.urlImagem"
                   alt="Colar Dourado Morana Taguatinga"
                 />
               </div>
@@ -160,7 +160,7 @@ export default {
     const cart = $cookies.get('cart')
     const produtos = await Promise.all(
       cart.map(async (item) => {
-        const produto = await $axios.$get(`produtos/${item.produto.id}`)
+        const produto = await $axios.$get(`/api/produtos/${item.produto.id}`)
         return { ...produto, quantidade: item.quantidade }
       })
     )
@@ -236,6 +236,12 @@ export default {
     getTotalPrice(id) {
       const produto = this.produtos.filter((produto) => produto.id === id)[0]
       return this.formattedPrice(produto.preco * produto.quantidade)
+    }
+  },
+
+  head() {
+    return {
+      title: `Morana Taguatinga Shopping | Seu carrinho (${this.produtos.length})`
     }
   }
 }

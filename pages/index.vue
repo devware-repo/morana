@@ -103,7 +103,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   async asyncData({ $axios }) {
-    const produtos = await $axios.$get('produtos')
+    const produtos = await $axios.$get('/api/produtos')
     return { produtos }
   },
   computed: {
@@ -128,6 +128,15 @@ export default {
       this.$cookies.set('cart', newCart)
       const cookieCart = this.$cookies.get('cart')
       this.$store.commit('cart/setCart', cookieCart)
+    }
+  },
+
+  head() {
+    return {
+      title:
+        this.$nuxt.$route.name === 'catalogo'
+          ? 'Morana Taguatinga Shopping | Catálogo'
+          : 'Morana Taguatinga Shopping'
     }
   }
 }

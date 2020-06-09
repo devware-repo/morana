@@ -24,10 +24,10 @@
                 >
                   <li>
                     <a
-                      href="javascript:;"
                       data-toggle="tooltip"
                       data-placement="bottom"
                       title="Encerrar Sessão"
+                      @click="logout()"
                     >
                       <img
                         class="cart-menu-icon"
@@ -44,7 +44,7 @@
             class="col-6 d-inline-block d-xl-none ml-md-0 py-3"
             style="position: relative; top: 3px;"
           >
-            <a href="javascript:;">
+            <a @click="logout()">
               <img
                 class="cart-menu-icon float-right"
                 src="/images/log-off.svg"
@@ -263,38 +263,6 @@
       </div>
     </div>
 
-    <!-- Modal Remover -->
-    <div id="remover-modal" class="modal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Este produto será excluído</h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Você realmente deseja excluir este produto?</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-info py-2"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-danger py-2">Excluir</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Modal Cancelar Pagamento -->
     <div id="cancelar-modal" class="modal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -330,3 +298,21 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  middleware: 'authenticated',
+  methods: {
+    logout() {
+      this.$store.commit('auth/setToken', null)
+      this.$cookies.remove('accessToken')
+      window.location.href = '/login'
+    }
+  },
+  head() {
+    return {
+      title: 'Morana Taguatinga Shopping | Admin'
+    }
+  }
+}
+</script>

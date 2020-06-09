@@ -1,6 +1,11 @@
 <template>
   <div>
-    <span class="add-button" data-toggle="modal" data-target="#cadastro-modal">
+    <span
+      class="add-button"
+      data-toggle="modal"
+      data-target="#cadastro-modal"
+      @click="create()"
+    >
       <img
         class="add-icon"
         src="/images/add-icon.svg"
@@ -153,173 +158,186 @@
               </div>
             </div>
           </div>
+          <div v-if="loading" class="container-loading">
+            <div class="loader">Loading...</div>
+          </div>
           <!-- Listagem dos Produtos Desktop -->
-          <div
-            v-for="produto in getProdutos"
-            :key="produto.id"
-            class="d-none d-md-flex row mt-4 product-parent"
-            data-product-id="1"
-          >
-            <div class="col">
-              <h1 class="admin-type mb-3">Produto</h1>
-              <img
-                class="admin-produto-img"
-                data-modalInputName="image"
-                :src="produto.urlImagem"
-                :alt="produto.nome"
-              />
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Nome</h1>
-              <p class="admin-produto-description" data-modalInputName="nome">
-                {{ produto.nome }}
-              </p>
-              <p
-                class="admin-produto-description d-none"
-                data-modalInputName="descricao"
-              >
-                {{ produto.descricao }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Ref</h1>
-              <p class="admin-produto-description" data-modalInputName="ref">
-                {{ produto.numeroRegistro }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Qtd</h1>
-              <p
-                class="admin-produto-description"
-                data-modalInputName="quantidade"
-              >
-                x{{ produto.quantidadeEstoque }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Cor</h1>
-              <p
-                class="admin-produto-description"
-                style="text-transform: capitalize"
-                data-modalInputName="cor"
-              >
-                {{ produto.cor }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Categoria</h1>
-              <p
-                class="admin-produto-description"
-                data-modalInputName="categoria"
-              >
-                {{ produto.categoria }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Preço</h1>
-              <p class="admin-produto-description" data-modalInputName="preco">
-                {{ produto.preco }}
-              </p>
-            </div>
-            <div class="col">
-              <h1 class="admin-type mb-3">Criado em:</h1>
-              <p
-                class="admin-produto-description"
-                data-modalInputName="pedidoEm"
-              >
-                {{ produto.dataRegistro }}
-              </p>
-            </div>
-            <div class="col d-flex d-md-block d-lg-flex align-items-end">
-              <div class="row">
-                <div class="col-6">
-                  <span
-                    class="passContent"
-                    data-toggle="modal"
-                    data-target="#editar-modal"
-                  >
-                    <img
-                      class="admin-options-icon"
-                      src="/images/edit-icon.svg"
-                      alt="Editar Produto"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                      title="Editar Produto"
-                    />
-                  </span>
-                </div>
-                <div class="col-6">
-                  <span
-                    class="passContent"
-                    data-toggle="modal"
-                    data-target="#remover-modal"
-                  >
-                    <img
-                      class="admin-options-icon"
-                      src="/images/remove-icon.svg"
-                      alt="Remover Produto"
-                      data-toggle="tooltip"
-                      data-placement="bottom"
-                      title="Remover Produto"
-                    />
-                  </span>
+          <div v-else>
+            <div
+              v-for="produto in getProdutos"
+              :key="produto.id"
+              class="d-none d-md-flex row mt-4 product-parent"
+              data-product-id="1"
+            >
+              <div class="col">
+                <h1 class="admin-type mb-3">Produto</h1>
+                <img
+                  class="admin-produto-img"
+                  data-modalInputName="image"
+                  :src="produto.urlImagem"
+                  :alt="produto.nome"
+                />
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Nome</h1>
+                <p class="admin-produto-description" data-modalInputName="nome">
+                  {{ produto.nome }}
+                </p>
+                <p
+                  class="admin-produto-description d-none"
+                  data-modalInputName="descricao"
+                >
+                  {{ produto.descricao }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Ref</h1>
+                <p class="admin-produto-description" data-modalInputName="ref">
+                  {{ produto.numeroRegistro }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Qtd</h1>
+                <p
+                  class="admin-produto-description"
+                  data-modalInputName="quantidade"
+                >
+                  x{{ produto.quantidadeEstoque }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Cor</h1>
+                <p
+                  class="admin-produto-description"
+                  style="text-transform: capitalize"
+                  data-modalInputName="cor"
+                >
+                  {{ produto.cor }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Categoria</h1>
+                <p
+                  class="admin-produto-description"
+                  data-modalInputName="categoria"
+                >
+                  {{ produto.categoria }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Preço</h1>
+                <p
+                  class="admin-produto-description"
+                  data-modalInputName="preco"
+                >
+                  {{ produto.preco }}
+                </p>
+              </div>
+              <div class="col">
+                <h1 class="admin-type mb-3">Criado em:</h1>
+                <p
+                  class="admin-produto-description"
+                  data-modalInputName="pedidoEm"
+                >
+                  {{ produto.dataRegistro }}
+                </p>
+              </div>
+              <div class="col d-flex d-md-block d-lg-flex align-items-end">
+                <div class="row">
+                  <div class="col-6">
+                    <span
+                      class="passContent"
+                      data-toggle="modal"
+                      data-target="#cadastro-modal"
+                      @click="edit(produto)"
+                    >
+                      <img
+                        class="admin-options-icon"
+                        src="/images/edit-icon.svg"
+                        alt="Editar Produto"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Editar Produto"
+                      />
+                    </span>
+                  </div>
+                  <div class="col-6">
+                    <span
+                      class="passContent"
+                      data-toggle="modal"
+                      data-target="#remover-modal"
+                      @click="edit(produto)"
+                    >
+                      <img
+                        class="admin-options-icon"
+                        src="/images/remove-icon.svg"
+                        alt="Remover Produto"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        title="Remover Produto"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Listagem dos Produtos Mobile -->
-          <div class="d-flex d-md-none row no-gutters mt-4" data-product-id="1">
-            <div class="col-3">
-              <img
-                class="admin-produto-img"
-                src="/images/colar-coracao.jpg"
-                alt="Colar Morana Taguatinga"
-              />
-            </div>
-            <div class="col-3">
-              <p class="admin-produto-description">
-                Nome: Colar Coração Dourado
-              </p>
-              <p class="admin-produto-description">R$27,90</p>
-              <p class="admin-produto-description">Qtd: x3</p>
-            </div>
-            <div class="col-3">
-              <p class="admin-produto-description">Cat: Colar</p>
-              <p class="admin-produto-description">Cor: Dourado</p>
-              <p class="admin-produto-description">Venda: 27/11/2019</p>
-            </div>
-            <div class="col-3">
-              <p class="admin-produto-description">Ref:</p>
-              <p class="admin-produto-description">12345678912</p>
-            </div>
-            <div class="col-3 d-flex align-items-end">
-              <div class="row">
-                <div class="col-6">
-                  <span
-                    class="passContent"
-                    data-toggle="modal"
-                    data-target="#editar-modal"
-                  >
-                    <img
-                      class="admin-options-icon"
-                      src="/images/edit-icon.svg"
-                      alt="Editar Produto"
-                    />
-                  </span>
-                </div>
-                <div class="col-6">
-                  <span
-                    class="passContent"
-                    data-toggle="modal"
-                    data-target="#remover-modal"
-                  >
-                    <img
-                      class="admin-options-icon"
-                      src="/images/remove-icon.svg"
-                      alt="Remover Produto"
-                    />
-                  </span>
+            <!-- Listagem dos Produtos Mobile -->
+            <div
+              class="d-flex d-md-none row no-gutters mt-4"
+              data-product-id="1"
+            >
+              <div class="col-3">
+                <img
+                  class="admin-produto-img"
+                  src="/images/colar-coracao.jpg"
+                  alt="Colar Morana Taguatinga"
+                />
+              </div>
+              <div class="col-3">
+                <p class="admin-produto-description">
+                  Nome: Colar Coração Dourado
+                </p>
+                <p class="admin-produto-description">R$27,90</p>
+                <p class="admin-produto-description">Qtd: x3</p>
+              </div>
+              <div class="col-3">
+                <p class="admin-produto-description">Cat: Colar</p>
+                <p class="admin-produto-description">Cor: Dourado</p>
+                <p class="admin-produto-description">Venda: 27/11/2019</p>
+              </div>
+              <div class="col-3">
+                <p class="admin-produto-description">Ref:</p>
+                <p class="admin-produto-description">12345678912</p>
+              </div>
+              <div class="col-3 d-flex align-items-end">
+                <div class="row">
+                  <div class="col-6">
+                    <span
+                      class="passContent"
+                      data-toggle="modal"
+                      data-target="#editar-modal"
+                    >
+                      <img
+                        class="admin-options-icon"
+                        src="/images/edit-icon.svg"
+                        alt="Editar Produto"
+                      />
+                    </span>
+                  </div>
+                  <div class="col-6">
+                    <span
+                      class="passContent"
+                      data-toggle="modal"
+                      data-target="#remover-modal"
+                    >
+                      <img
+                        class="admin-options-icon"
+                        src="/images/remove-icon.svg"
+                        alt="Remover Produto"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -338,7 +356,13 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title">Cadastrar Produto</h1>
+            <h1 class="modal-title">
+              {{
+                `${
+                  action === 'create' ? 'Cadastrar Produto' : 'Editar Produto'
+                }`
+              }}
+            </h1>
           </div>
           <div class="modal-body">
             <div class="container">
@@ -418,7 +442,7 @@
                       >
                       <input
                         id="input-ref"
-                        v-model="item.codigoCadastro"
+                        v-model="item.numeroRegistro"
                         name="referencia"
                         type="number"
                         class="form-control"
@@ -461,14 +485,14 @@
                         <div class="invalid-feedback">
                           Preencha este campo!
                         </div>
-                        <option>Brinco</option>
-                        <option>Colar</option>
-                        <option>Pulseira</option>
-                        <option>Anel</option>
-                        <option>Conjunto</option>
-                        <option>Acessórios</option>
-                        <option>Berloques</option>
-                        <option>Tornozeleira</option>
+                        <option>brinco</option>
+                        <option>colar</option>
+                        <option>pulseira</option>
+                        <option>anel</option>
+                        <option>conjunto</option>
+                        <option>acessorios</option>
+                        <option>berloques</option>
+                        <option>tornozeleira</option>
                       </select>
                     </div>
                     <div class="form-group">
@@ -484,9 +508,9 @@
                         <div class="invalid-feedback">
                           Preencha este campo!
                         </div>
-                        <option>Prata</option>
-                        <option>Dourado</option>
-                        <option>Grafite</option>
+                        <option>prata</option>
+                        <option>dourado</option>
+                        <option>grafite</option>
                       </select>
                     </div>
                     <div class="form-group">
@@ -519,13 +543,50 @@
           <div class="modal-footer">
             <button class="cancel-btn" data-dismiss="modal">Cancelar</button>
             <button
-              type="submit"
-              form="send-form"
               class="send-btn"
               value="Salvar"
               data-validation="cadastro-form"
+              :disabled="loadingForm"
+              @click="submit()"
             >
-              Cadastrar
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Remover -->
+    <div id="remover-modal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Este produto será excluído</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Você realmente deseja excluir este produto?</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-info py-2"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger py-2"
+              @click="deleteItem()"
+            >
+              Excluir
             </button>
           </div>
         </div>
@@ -538,24 +599,25 @@
 export default {
   layout: 'admin',
   async asyncData({ $axios }) {
-    const produtos = await $axios.$get('produtos')
+    const produtos = await $axios.$get('/api/produtos')
     return { produtos }
   },
   data() {
     return {
       search: '',
       item: {
-        nome: '',
-        descricao: '',
-        preco: 0,
-        urlVideo: '',
-        codigoCadastro: '',
-        quantidade: 0,
-        quantidadeEstoque: '',
-        categoria: '',
-        cor: ''
+        nome: null,
+        descricao: null,
+        preco: null,
+        urlVideo: null,
+        numeroRegistro: null,
+        quantidadeEstoque: null,
+        categoria: null,
+        cor: null
       },
-      action: 'create'
+      action: 'create',
+      loading: false,
+      loadingForm: false
     }
   },
   computed: {
@@ -580,13 +642,63 @@ export default {
     }
   },
   methods: {
+    capitalize(s) {
+      if (typeof s !== 'string') return ''
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    },
+    async loadData() {
+      this.loading = true
+      this.produtos = await this.$axios.$get('/api/produtos')
+      this.loading = false
+    },
     edit(produto) {
-      this.produto = produto
+      this.item = produto
       this.action = 'edit'
     },
     create() {
-      this.produto = {}
+      this.item = {
+        nome: null,
+        descricao: null,
+        preco: null,
+        urlVideo: null,
+        numeroRegistro: null,
+        quantidadeEstoque: null,
+        categoria: null,
+        cor: null
+      }
       this.action = 'create'
+    },
+    async submit() {
+      try {
+        this.loadingForm = true
+        this.$nuxt.$loading.start()
+        if (this.action === 'create') {
+          await this.$axios.post('/api/produtos', this.item)
+        } else if (this.action === 'edit') {
+          await this.$axios.put(`/api/produtos/${this.item.id}`, this.item)
+        }
+        this.loadingForm = false
+        this.$nuxt.$loading.finish()
+        this.loadData()
+      } catch (err) {
+        this.loadingForm = false
+        this.$nuxt.$loading.finish()
+        alert('Não foi possivel salvar! Tente novamente')
+      }
+    },
+    async deleteItem(id) {
+      try {
+        this.loadingForm = true
+        this.$nuxt.$loading.start()
+        await this.$axios.delete(`/api/produtos/${this.item.id}`)
+        this.loadingForm = false
+        this.$nuxt.$loading.finish()
+        this.loadData()
+      } catch (err) {
+        this.loadingForm = false
+        this.$nuxt.$loading.finish()
+        alert('Não foi possivel deletar! Tente novamente')
+      }
     }
   }
 }

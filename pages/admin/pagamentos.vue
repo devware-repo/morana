@@ -1,5 +1,5 @@
 <template>
-  <div id="admin-cover" class="position-relative">
+  <div v-if="produtos.itens" id="admin-cover" class="position-relative">
     <!-- Menu Desktop -->
     <div class="d-none d-lg-block menu-lateral">
       <div class="container mt-3">

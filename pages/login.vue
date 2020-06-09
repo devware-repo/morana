@@ -9,7 +9,7 @@
         </div>
         <div class="row mt-4">
           <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4">
-            <form action="#" class="needs-validation">
+            <form class="needs-validation">
               <div class="login-input-wrapper text-left">
                 <img
                   class="login-icon"
@@ -17,6 +17,7 @@
                   alt="Usuário"
                 />
                 <input
+                  v-model="username"
                   type="text"
                   class="login-input"
                   placeholder="Usuário"
@@ -31,6 +32,7 @@
                   alt="Senha"
                 />
                 <input
+                  v-model="senha"
                   type="password"
                   class="login-input"
                   placeholder="Senha"
@@ -38,7 +40,13 @@
                   required
                 />
               </div>
-              <button type="submit" class="login-button mt-2">Login</button>
+              <button
+                class="login-button mt-2"
+                :disabled="loading"
+                @click="login()"
+              >
+                Login
+              </button>
             </form>
           </div>
         </div>
@@ -49,6 +57,36 @@
 
 <script>
 export default {
-  layout: 'login'
+  layout: 'login',
+  data() {
+    return {
+      username: '',
+      senha: '',
+      loading: false
+    }
+  },
+
+  methods: {
+    async login() {
+      try {
+        this.$nuxt.$loading.start()
+        this.loading = true
+        const { username, senha } = this
+        const response = await this.$axios.post('/api/login', {
+          username,
+          senha
+        })
+        this.$store.commit('auth/setToken', response.headers.authorization)
+        this.$cookies.set('accessToken', response.headers.authorization)
+        window.location.href = '/admin'
+        this.loading = false
+        this.$nuxt.$loading.finish()
+      } catch (err) {
+        this.loading = false
+        this.$nuxt.$loading.finish()
+        alert('Email ou senha inválidos')
+      }
+    }
+  }
 }
 </script>

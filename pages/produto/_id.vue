@@ -46,7 +46,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   async asyncData({ $axios, params }) {
-    const produto = await $axios.$get(`produtos/${params.id}`)
+    const produto = await $axios.$get(`/api/produtos/${params.id}`)
     return { produto }
   },
   data() {
@@ -89,6 +89,12 @@ export default {
       this.$cookies.set('cart', newCart)
       const cookieCart = this.$cookies.get('cart')
       this.$store.commit('cart/setCart', cookieCart)
+    }
+  },
+
+  head() {
+    return {
+      title: `Morana Taguatinga Shopping | ${this.produto.nome || 'Produto'}`
     }
   }
 }

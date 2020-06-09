@@ -4,7 +4,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Morana Taguatinga Shopping',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -86,7 +86,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#f16821', height: '5px' },
   /*
    ** Global CSS
    */
@@ -94,7 +94,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~/plugins/auth.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -108,6 +108,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     'cookie-universal-nuxt'
   ],
   /*
@@ -115,7 +116,18 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: 'https://catalogo-morana.herokuapp.com/'
+    proxy: true
+  },
+  /*
+   ** Proxy
+   */
+  proxy: {
+    '/api': {
+      target: 'https://catalogo-morana.herokuapp.com',
+      pathRewrite: {
+        '^/api': '/'
+      }
+    }
   },
   /*
    ** Build configuration
