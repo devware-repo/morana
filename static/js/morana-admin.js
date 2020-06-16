@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Abrir e Fechar o Menu Lateral
 $(document).ready(function() {
   const isMobile = window.matchMedia('(max-width: 1023px)')
@@ -39,41 +41,5 @@ $(document).ready(function() {
         .children('.row')
         .addClass('link-active')
     }
-  })
-
-  // Passar dados para Modal
-  $('.passContent').on('click', function() {
-    const target = $('div' + $(this).data('target'))
-    let data = ''
-    // let id = $(this).parents('.product-parent').data('produto-id');
-    if (
-      $(this)
-        .parents('.row[data-product-id]')
-        .hasClass('product-parent')
-    ) {
-      data = $(this)
-        .parents('.product-parent')
-        .find('[data-modalInputName]')
-    } else {
-      data = $('.row.product-parent[data-product-id]').find(
-        '[data-modalInputName]'
-      )
-    }
-
-    data.each(function() {
-      const inputName = $(this).attr('data-modalInputName')
-      const formInputName = target.find(
-        `input[name*=${inputName}], select[name*=${inputName}]`
-      )
-      if (formInputName.attr('type') == 'number') {
-        formInputName.val(
-          $(this)
-            .text()
-            .replace(/\D/g, '')
-        )
-      } else {
-        formInputName.val($(this).text())
-      }
-    })
   })
 })
