@@ -39,8 +39,7 @@ export default {
       { rel: 'stylesheet', href: '/css/style.css' },
       { rel: 'stylesheet', href: '/css/produto.css' },
       { rel: 'stylesheet', href: '/css/carrinho.css' },
-      { rel: 'stylesheet', href: '/css/morana-admin.css' },
-      { rel: 'stylesheet', href: '/css/dropzone.min.css' }
+      { rel: 'stylesheet', href: '/css/morana-admin.css' }
     ],
     script: [
       { src: '/js/jquery-3.3.1.min.js', type: 'text/javascript', body: true },
@@ -78,7 +77,6 @@ export default {
         body: true
       },
       { src: '/js/connection.js', type: 'text/javascript', body: true },
-      { src: '/js/dropzone.min.js', type: 'text/javascript', body: true },
       { src: '/js/main.js', type: 'text/javascript', body: true },
       { src: '/js/morana-admin.js', type: 'text/javascript', body: true }
     ]

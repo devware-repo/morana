@@ -5,7 +5,6 @@ $(document).ready(function() {
   const isMobile = window.matchMedia('(max-width: 1023px)')
   if (!isMobile.matches) {
     const MenuFechado = localStorage.MenuFechado
-    console.log(MenuFechado)
     if (MenuFechado === 's') {
       $('.menu-lateral, .produtos-tela').toggleClass('menu-closed')
       $('.menu-text').toggleClass('is-closed')
@@ -22,7 +21,6 @@ $(document).ready(function() {
       localStorage.MenuFechado = $('#menu-icon').hasClass('is-closed')
         ? 's'
         : 'n'
-      console.log(MenuFechado)
     })
   } else {
     $('#menu-icon-mobile, #menu-close-mobile').on('click', function() {
